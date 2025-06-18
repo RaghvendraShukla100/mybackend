@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema(
       unique: true,
     },
     age: { type: Number, default: 0 },
+    profilePic: { type: String },
   },
   { timestamps: true }
 );

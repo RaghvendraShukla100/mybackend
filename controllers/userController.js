@@ -1,12 +1,14 @@
-import User from "../models/User";
-import validationResults from "express-validator";
+import User from "../models/User.js";
+import { validationResult } from "express-validator";
 
 // CREATE NEW USER
 export const createUser = async (req, res, next) => {
   try {
-    const error = validationResults(req);
+    console.log(`request received : ${req.body}`);
+    const error = validationResult(req);
     if (!error.isEmpty()) return res.status(400).json({ error: error.array() });
     const user = await User.create(req.body);
+    res.status(201).json(user);
   } catch (err) {
     next(err);
   }
@@ -22,11 +24,11 @@ export const getUsers = async (req, res, next) => {
   }
 };
 
-//  GET SINGLE USER
+// GET SINGLE USER
 export const getUser = async (req, res, next) => {
   try {
-    const user = await User.findById(req.prams.id);
-    if (!user) return res.status(404).json({ message: `user not found` });
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).json({ message: "user not found" });
     res.json(user);
   } catch (err) {
     next(err);
@@ -36,7 +38,7 @@ export const getUser = async (req, res, next) => {
 // UPDATE USER
 export const updateUser = async (req, res, next) => {
   try {
-    const user = await User.findByIdAndUpdate(req.prams.id, req.body, {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true,
     });
@@ -50,8 +52,8 @@ export const updateUser = async (req, res, next) => {
 // DELETE USER
 export const deleteUser = async (req, res, next) => {
   try {
-    const user = await User.findByIdAndDelete(req.prams.id);
-    if (!user) return res.status(404).json({ message: "user not found " });
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.status(404).json({ message: "user not found" });
     res.json({ message: "user deleted successfully" });
   } catch (err) {
     next(err);

@@ -2,11 +2,11 @@ import express from "express";
 import { body } from "express-validator";
 import {
   createUser,
-  getUser,
   getUsers,
+  getUser,
   updateUser,
   deleteUser,
-} from "../controllers/userController";
+} from "../controllers/userController.js";
 
 const router = express.Router();
 const userValidation = [

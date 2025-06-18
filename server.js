@@ -22,7 +22,7 @@ app.use(express.json());
 app.use("/api/users", userRoutes);
 
 // ERROR HANDELING
-app.use(errorHandler());
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
